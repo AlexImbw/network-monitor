@@ -28,6 +28,18 @@ app.layout = html.Div([
     dcc.Interval(id="intervalo-atualizacao", interval=2000) #Atualiza a cada 2s
 ])
 
+#CONFIGURAÇÃO DA CAPTURA DE TRAFEGO
+
+@app.callback(
+    [Output("bytes-enviados", "children"),
+     Output("bytes-recebidos", "children")],
+     [Input("intervalo-atualizacao", "n_intervals")]
+
+)
+
+def update_network_traffic(n_intervals):
+    bytes_sent, bytes_recv = get_network_traffic()
+    return f"{bytes_sent} bytes", f"{bytes_recv} bytes"
 
 #FAZ O SERVIDOR RODAR NO NAVEGADOR
 if __name__ == "__main__":
